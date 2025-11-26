@@ -1,0 +1,54 @@
+Porting the Crossbow code to ASM11: <DRAFT>
+
+1) Rename all of the source files to be spaceless and to have a ".a" file extension
+2) Produce a batch file that invokes fr.pl for each ".a" file in the build
+3) run the above batch file.  The result is a *nearly* ASM11 ready.  Any #IF conditionals that
+	used the "~" to signify "NOT" will need to be edited.  The #IF parameter needs to be
+	enclosed in "{}" braces, and would be tested for equality to "FALSE" to replicate the
+	Crossbow syntax.
+   Further, all #IFs need to be examined to repair and double "=" expressions.
+
+4) The result is a list of the original files, all with ".asm" extensions ready for assembly by ASM11.
+5) Produce a maker batch file to simplify the assembly invocation.
+
+Example maker batch file:
+==============================================================================
+rem This is the "maker" file for the FF-8070 assembly object.
+rem		It assembles then builds the composite object file
+rem
+
+"C:\Users\ke0ff\Documents\FF-800\FF-800 SW-n-Manuals\V311 sw\asm11" -exp+ -c+ -e+ -rel- z8070.asm
+@echo off
+echo Press any key to exit . . .
+pause>nul
+===============================================================================
+
+The path to the ASM11 folder needs to be pasted to get it to work easily.  This will be machine dependent unless
+steps are taken to place ASM11.exe into a standard folder (not a bad idea, if I do say-so myself).
+
+Most Crossbow projects have a single root source which includes all the other sources.  These projects only need
+the above batch file to assemble and will produce a single object file.  The primary exception is the FF-800 source,
+it requires several instantiations to produce all of the object files for the final build.  "ss.pl" is used to
+stitch all of the objects into a single object result.  This schema can be adapted for other multi-compile builds
+(tho none exist at this writing).
+
+Multi-file assembly batch
+===============================================================================
+rem This is the "maker" file for the FF-800 assembly object.
+rem		It assembles then builds the composite object file
+rem		that can be downloaded to the FF-800 FFLASH system.
+rem
+rem	WORD3 changes must be assembled separately (and first) as
+rem		this batch system depends on the WORD3 object being present
+rem		and ready for combination.
+
+..\asm11 -exp+ -c+ -e+ -rel- a_bank0.asm
+..\asm11 -exp+ -c+ -e+ -rel- sbank2.asm
+..\asm11 -exp+ -c+ -e+ -rel- sbank0.asm
+..\asm11 -exp+ -c+ -e+ -rel- sbank1.asm
+..\asm11 -exp+ -c+ -e+ -rel- sbank3.asm
+ss.pl
+@echo off
+echo Press any key to exit . . .
+pause>nul
+===============================================================================

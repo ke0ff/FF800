@@ -9,7 +9,8 @@ to obtian the system software needed to run the perl scripts.  The perl scripts 
 the file operations can be completed manually in a few minutes, but they greatly improve the accuracy and
 reduce the manual intervention needed to produce an object image for the FF-800 software load.
 
-Build instructions are generally found in an appropriatly named text file within the source subdirectory.
+Build instructions are generally found in an appropriately named text file within the source subdirectory.
 
 Joe Haas 11/16/25
+
 

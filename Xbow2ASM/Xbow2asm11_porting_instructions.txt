@@ -1,4 +1,4 @@
-Porting the Crossbow code to ASM11: <DRAFT>
+Porting the Crossbow code to ASM11 (http://www.aspisys.com/asm11.htm): <DRAFT>
 
 1) Rename all of the source files to be spaceless and to have a ".a" file extension
 2) Produce a batch file that invokes fr.pl for each ".a" file in the build
